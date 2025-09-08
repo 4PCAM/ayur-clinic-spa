@@ -76,23 +76,6 @@ export function HomeSection({ onNavigateToPillar, assessmentProgress }: HomeSect
             with modern diagnostic approaches for holistic patient evaluation.
           </p>
         </div>
-
-        {/* Overall Progress */}
-        <div className="max-w-md mx-auto space-y-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Overall Progress</span>
-            <span className="font-semibold text-primary">{Math.round(totalProgress)}%</span>
-          </div>
-          <div className="bg-muted rounded-full h-3 overflow-hidden">
-            <div 
-              className="h-full bg-gradient-primary transition-all duration-700 ease-out"
-              style={{ width: `${totalProgress}%` }}
-            />
-          </div>
-          <p className="text-sm text-muted-foreground">
-            {completedPillars} of 4 pillars completed
-          </p>
-        </div>
       </div>
 
       {/* Key Benefits */}
@@ -125,61 +108,6 @@ export function HomeSection({ onNavigateToPillar, assessmentProgress }: HomeSect
           <p className="text-sm text-muted-foreground">
             Structured assessment for accurate diagnosis
           </p>
-        </div>
-      </div>
-
-      {/* Assessment Pillars */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-center mb-6">Assessment Pillars</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {pillars.map((pillar) => (
-            <PillarCard
-              key={pillar.id}
-              title={pillar.title}
-              description={pillar.description}
-              icon={pillar.icon}
-              pillarType={pillar.pillarType}
-              progress={pillar.progress}
-              isCompleted={pillar.progress === 100}
-              onClick={() => onNavigateToPillar?.(pillar.id)}
-              className="animate-fade-in"
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Final Assessment Card */}
-      <div className="max-w-2xl mx-auto">
-        <div 
-          onClick={() => onNavigateToPillar?.('final-assessment')}
-          className={cn(
-            "group relative p-6 rounded-xl border-2 cursor-pointer transition-ayur",
-            "bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20",
-            "hover:shadow-ayur-strong hover:scale-[1.02] active:scale-[0.98]",
-            completedPillars === 4 && "ring-2 ring-primary shadow-ayur-medium"
-          )}
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-primary text-primary-foreground rounded-xl">
-              <FileText className="w-6 h-6" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-ayur">
-                Final Assessment Dashboard
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                {completedPillars === 4 
-                  ? "Review comprehensive analysis and generate clinical report"
-                  : `Complete all ${4 - completedPillars} remaining pillars to access final dashboard`
-                }
-              </p>
-            </div>
-            {completedPillars === 4 && (
-              <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center animate-pulse-gentle">
-                <FileText className="w-4 h-4" />
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

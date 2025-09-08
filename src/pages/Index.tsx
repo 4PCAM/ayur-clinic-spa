@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AccordionSPA } from '@/components/ui/accordion-spa';
 import { HomeSection } from '@/components/4pcam/HomeSection';
+import { ClinicalAssessmentDashboard } from '@/components/4pcam/ClinicalAssessmentDashboard';
 import { 
   Flame, 
   Users, 
@@ -177,9 +178,10 @@ const Index = () => {
       icon: <Stethoscope className="w-5 h-5" />,
       children: (
         <div className="space-y-4">
-          <p className="text-muted-foreground mb-6">
-            Four Pillar Clinical Assessment Model - Comprehensive Ayurvedic evaluation framework
-          </p>
+          <ClinicalAssessmentDashboard 
+            onNavigateToPillar={handleNavigateToPillar}
+            assessmentProgress={assessmentProgress}
+          />
           <AccordionSPA 
             items={clinicalAssessmentItems}
             defaultOpen="patient-info"
