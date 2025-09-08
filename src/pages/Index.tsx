@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { AccordionSPA } from '@/components/ui/accordion-spa';
 import { HomeSection } from '@/components/4pcam/HomeSection';
 import { 
-  Home, 
   Flame, 
   Users, 
   Leaf, 
   Waves, 
   FileText,
   User,
-  Calendar,
-  ClipboardList
+  Stethoscope,
+  Eye,
+  Heart,
+  Activity,
+  Zap
 } from 'lucide-react';
 
 const Index = () => {
@@ -85,19 +87,19 @@ const Index = () => {
     </div>
   );
 
-  const accordionItems = [
-    {
-      id: 'home',
-      title: 'Home / Dashboard',
-      icon: <Home className="w-5 h-5" />,
-      children: (
-        <HomeSection 
-          onNavigateToPillar={handleNavigateToPillar}
-          assessmentProgress={assessmentProgress}
-        />
-      ),
-      className: 'border-primary/20 bg-gradient-to-br from-primary/5 to-background'
-    },
+  const PlaceholderAssessment = ({ title, description }: { title: string; description: string }) => (
+    <div className="space-y-4">
+      <p className="text-muted-foreground">{description}</p>
+      <div className="bg-muted/30 rounded-lg p-8 text-center">
+        <p className="text-muted-foreground">
+          {title} section will be developed as per Ayurvedic assessment protocols.
+        </p>
+      </div>
+    </div>
+  );
+
+  // Clinical Assessment (4-PCAM) sub-items
+  const clinicalAssessmentItems = [
     {
       id: 'patient-info',
       title: 'Patient Information',
@@ -167,12 +169,103 @@ const Index = () => {
     }
   ];
 
+  // Main assessment sections
+  const mainAccordionItems = [
+    {
+      id: 'clinical-assessment',
+      title: 'Clinical Assessment (4-PCAM)',
+      icon: <Stethoscope className="w-5 h-5" />,
+      children: (
+        <div className="space-y-4">
+          <p className="text-muted-foreground mb-6">
+            Four Pillar Clinical Assessment Model - Comprehensive Ayurvedic evaluation framework
+          </p>
+          <AccordionSPA 
+            items={clinicalAssessmentItems}
+            defaultOpen="patient-info"
+            className="space-y-4"
+          />
+        </div>
+      ),
+      className: 'border-primary/20 bg-gradient-to-br from-primary/5 to-background'
+    },
+    {
+      id: 'disease-assessment',
+      title: 'Disease Assessment',
+      icon: <Activity className="w-5 h-5" />,
+      children: (
+        <PlaceholderAssessment 
+          title="Disease Assessment"
+          description="Comprehensive evaluation of disease manifestations, symptoms analysis, and pathological assessment according to Ayurvedic principles."
+        />
+      ),
+      className: 'border-orange-200 bg-gradient-to-br from-orange-50 to-background'
+    },
+    {
+      id: 'ashtaviddha-pariksha',
+      title: 'Ashtaviddha Pariksha',
+      icon: <Eye className="w-5 h-5" />,
+      children: (
+        <PlaceholderAssessment 
+          title="Ashtaviddha Pariksha"
+          description="Eight-fold examination: Nadi (pulse), Mutra (urine), Mala (stool), Jihva (tongue), Shabda (voice), Sparsha (touch), Druk (eyes), Akriti (appearance)."
+        />
+      ),
+      className: 'border-blue-200 bg-gradient-to-br from-blue-50 to-background'
+    },
+    {
+      id: 'dashaviddha-pariksha',
+      title: 'Dashaviddha Pariksha',
+      icon: <Heart className="w-5 h-5" />,
+      children: (
+        <PlaceholderAssessment 
+          title="Dashaviddha Pariksha"
+          description="Ten-fold examination including additional parameters: Ahar (diet), Vihar (lifestyle), along with the eight-fold examination for comprehensive evaluation."
+        />
+      ),
+      className: 'border-green-200 bg-gradient-to-br from-green-50 to-background'
+    },
+    {
+      id: 'prakruti-pariksha',
+      title: 'Prakruti Pariksha',
+      icon: <Zap className="w-5 h-5" />,
+      children: (
+        <PlaceholderAssessment 
+          title="Prakruti Pariksha"
+          description="Constitutional analysis to determine individual's natural constitution (Prakruti) - the inherent proportion of Vata, Pitta, and Kapha doshas."
+        />
+      ),
+      className: 'border-purple-200 bg-gradient-to-br from-purple-50 to-background'
+    },
+    {
+      id: 'dhatu-sarata',
+      title: 'Dhatu Sarata',
+      icon: <Leaf className="w-5 h-5" />,
+      children: (
+        <PlaceholderAssessment 
+          title="Dhatu Sarata"
+          description="Assessment of tissue excellence and quality - evaluation of the strength, quality, and functional capacity of the seven bodily tissues (Sapta Dhatus)."
+        />
+      ),
+      className: 'border-emerald-200 bg-gradient-to-br from-emerald-50 to-background'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container max-w-6xl mx-auto px-4 py-8">
+        {/* Static Home/Dashboard Content */}
+        <div className="mb-8">
+          <HomeSection 
+            onNavigateToPillar={handleNavigateToPillar}
+            assessmentProgress={assessmentProgress}
+          />
+        </div>
+
+        {/* Collapsible Assessment Sections */}
         <AccordionSPA 
-          items={accordionItems}
-          defaultOpen="home"
+          items={mainAccordionItems}
+          defaultOpen="clinical-assessment"
           className="space-y-6"
         />
       </div>
