@@ -2,41 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* 4-PCAM Ayurvedic Design System - Earthy, warm, clinical aesthetic */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - warm earthy foundation */
+    --background: 45 15% 97%;
+    --foreground: 30 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card system - warm whites with subtle earth undertones */
+    --card: 40 20% 99%;
+    --card-foreground: 30 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Popover system */
+    --popover: 40 20% 99%;
+    --popover-foreground: 30 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - warm terracotta/orange inspired by Ayurvedic fire element */
+    --primary: 20 85% 55%;
+    --primary-foreground: 40 20% 99%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - calming sage green for balance */
+    --secondary: 110 30% 85%;
+    --secondary-foreground: 30 25% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted earth tones */
+    --muted: 45 20% 90%;
+    --muted-foreground: 30 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - warm amber for highlights */
+    --accent: 40 95% 65%;
+    --accent-foreground: 30 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive - muted red for clinical warnings */
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 20% 99%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and inputs - soft earthy tones */
+    --border: 45 25% 85%;
+    --input: 45 25% 85%;
+    --ring: 20 85% 55%;
 
-    --radius: 0.5rem;
+    /* Clinical assessment pillar colors */
+    --agni: 20 85% 55%;        /* Fire - warm orange */
+    --dosha: 270 60% 65%;      /* Spirit - deep purple */
+    --dhatu: 110 50% 45%;      /* Earth - forest green */
+    --srota: 200 70% 55%;      /* Water - ocean blue */
+
+    /* Gradients for visual depth */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(40 95% 65%));
+    --gradient-healing: linear-gradient(135deg, hsl(110 50% 45%), hsl(110 30% 85%));
+    --gradient-wisdom: linear-gradient(135deg, hsl(270 60% 65%), hsl(270 30% 85%));
+    --gradient-flow: linear-gradient(135deg, hsl(200 70% 55%), hsl(200 30% 85%));
+
+    /* Shadows with warm undertones */
+    --shadow-soft: 0 2px 8px hsl(30 25% 15% / 0.08);
+    --shadow-medium: 0 4px 16px hsl(30 25% 15% / 0.12);
+    --shadow-strong: 0 8px 32px hsl(30 25% 15% / 0.16);
+
+    /* Animation timing */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,41 +84,49 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark mode - deep earth tones with warm accents */
+    --background: 30 25% 8%;
+    --foreground: 45 15% 90%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 25% 12%;
+    --card-foreground: 45 15% 90%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 30 25% 12%;
+    --popover-foreground: 45 15% 90%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 20 85% 60%;
+    --primary-foreground: 30 25% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 110 20% 20%;
+    --secondary-foreground: 45 15% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 30 20% 18%;
+    --muted-foreground: 45 10% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 40 85% 55%;
+    --accent-foreground: 30 25% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 45 15% 90%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 30 20% 25%;
+    --input: 30 20% 25%;
+    --ring: 20 85% 60%;
+
+    /* Dark mode pillar colors - slightly brighter for contrast */
+    --agni: 20 85% 60%;
+    --dosha: 270 60% 70%;
+    --dhatu: 110 50% 50%;
+    --srota: 200 70% 60%;
+
+    --sidebar-background: 30 25% 10%;
+    --sidebar-foreground: 45 15% 85%;
+    --sidebar-primary: 20 85% 60%;
+    --sidebar-primary-foreground: 30 25% 8%;
+    --sidebar-accent: 30 20% 18%;
+    --sidebar-accent-foreground: 45 15% 85%;
+    --sidebar-border: 30 20% 25%;
+    --sidebar-ring: 20 85% 60%;
   }
 }
 
@@ -100,6 +136,136 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar for Ayurvedic aesthetic */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+@layer components {
+  /* Pillar cards with unique color themes */
+  .pillar-agni {
+    @apply bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/30;
+    @apply border-orange-200 dark:border-orange-800;
+  }
+
+  .pillar-dosha {
+    @apply bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/30;
+    @apply border-purple-200 dark:border-purple-800;
+  }
+
+  .pillar-dhatu {
+    @apply bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/30;
+    @apply border-green-200 dark:border-green-800;
+  }
+
+  .pillar-srota {
+    @apply bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30;
+    @apply border-blue-200 dark:border-blue-800;
+  }
+
+  /* Smooth accordion animations */
+  .accordion-content {
+    @apply overflow-hidden transition-all duration-300 ease-in-out;
+  }
+
+  .accordion-content[data-state="closed"] {
+    @apply h-0;
+  }
+
+  .accordion-content[data-state="open"] {
+    @apply h-auto;
+  }
+
+  /* Floating action animations */
+  .float-gentle {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Assessment progress indicators */
+  .progress-ring {
+    @apply relative inline-flex items-center justify-center;
+  }
+
+  .progress-ring::before {
+    @apply absolute inset-0 rounded-full border-2 border-muted;
+    content: '';
+  }
+
+  .progress-ring::after {
+    @apply absolute inset-0 rounded-full border-2 border-primary;
+    content: '';
+    clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%);
+    transform: rotate(var(--progress-angle, 0deg));
+  }
+}
+
+@layer utilities {
+  /* Text gradients for headings */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .text-gradient-healing {
+    @apply bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent;
+  }
+
+  /* Shadow utilities with Ayurvedic warmth */
+  .shadow-ayur-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-ayur-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-ayur-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  /* Smooth transitions */
+  .transition-ayur {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+}
+
+/* Keyframe animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
   }
 }
