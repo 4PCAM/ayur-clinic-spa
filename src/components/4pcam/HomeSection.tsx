@@ -66,7 +66,7 @@ export function HomeSection({ onNavigateToPillar, assessmentProgress }: HomeSect
       <div className="text-center space-y-6">
         <div className="space-y-3">
           <h1 className="text-4xl md:text-5xl font-bold text-gradient-primary">
-            4-PCAM
+            Vedic Health Scan
           </h1>
           <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
             Four Pillar Clinical Assessment Model
