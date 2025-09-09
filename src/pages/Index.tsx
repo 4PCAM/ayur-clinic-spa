@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AccordionSPA } from '@/components/ui/accordion-spa';
 import { HomeSection } from '@/components/4pcam/HomeSection';
 import { ClinicalAssessmentDashboard } from '@/components/4pcam/ClinicalAssessmentDashboard';
+import { AgniAssessment } from '@/components/4pcam/AgniAssessment';
 import { 
   Flame, 
   Users, 
@@ -27,6 +28,20 @@ const Index = () => {
   const handleNavigateToPillar = (pillarId: string) => {
     // This will be used to auto-open specific accordion sections
     console.log('Navigate to pillar:', pillarId);
+  };
+
+  const handleAgniComplete = (data: any) => {
+    setAssessmentProgress(prev => ({
+      ...prev,
+      agni: 100
+    }));
+  };
+
+  const handleAgniProgress = (progress: number) => {
+    setAssessmentProgress(prev => ({
+      ...prev,
+      agni: progress
+    }));
   };
 
   // Placeholder sections for now - will be built in subsequent steps
@@ -187,9 +202,9 @@ const Index = () => {
       title: 'Pillar 1 - Agni Dusti',
       icon: <Flame className="w-5 h-5" />,
       children: (
-        <PlaceholderPillar 
-          title="Agni Assessment"
-          description="Assessment of digestive fire and metabolic function. This section will evaluate the body's ability to digest, absorb, and transform nutrients."
+        <AgniAssessment 
+          onComplete={handleAgniComplete}
+          onProgressUpdate={handleAgniProgress}
         />
       ),
       className: 'pillar-agni'
