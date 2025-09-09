@@ -33,7 +33,7 @@ const Index = () => {
   const PatientInfoSection = () => (
     <div className="space-y-6">
       <h4 className="text-lg font-semibold mb-4">Patient Information</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="space-y-2">
           <label className="text-sm font-medium">Patient Name *</label>
           <input 
@@ -43,19 +43,44 @@ const Index = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Age/Sex *</label>
+          <label className="text-sm font-medium">Age *</label>
           <input 
-            type="text" 
+            type="number" 
             className="w-full px-3 py-2 border rounded-lg bg-background"
-            placeholder="e.g., 35/M"
+            placeholder="Enter age"
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">OPD No./IPD No.</label>
+          <label className="text-sm font-medium">Sex *</label>
+          <select className="w-full px-3 py-2 border rounded-lg bg-background">
+            <option value="">Select sex</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+          </select>
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">OPD No.</label>
           <input 
             type="text" 
             className="w-full px-3 py-2 border rounded-lg bg-background"
-            placeholder="Enter ID number"
+            placeholder="Enter OPD number"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">IPD No.</label>
+          <input 
+            type="text" 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            placeholder="Enter IPD number"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Occupation</label>
+          <input 
+            type="text" 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            placeholder="Enter occupation"
           />
         </div>
         <div className="space-y-2">
@@ -65,12 +90,61 @@ const Index = () => {
             className="w-full px-3 py-2 border rounded-lg bg-background"
           />
         </div>
-        <div className="col-span-1 md:col-span-2 space-y-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Follow Up Date</label>
+          <input 
+            type="date" 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Marital Status</label>
+          <select className="w-full px-3 py-2 border rounded-lg bg-background">
+            <option value="">Select status</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+        </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 space-y-2">
+          <label className="text-sm font-medium">Address</label>
+          <textarea 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            rows={2}
+            placeholder="Enter complete address"
+          />
+        </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 space-y-2">
           <label className="text-sm font-medium">Chief Complaints *</label>
           <textarea 
             className="w-full px-3 py-2 border rounded-lg bg-background"
             rows={3}
             placeholder="Enter chief complaints"
+          />
+        </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 space-y-2">
+          <label className="text-sm font-medium">Past History</label>
+          <textarea 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            rows={3}
+            placeholder="Enter past medical history"
+          />
+        </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 space-y-2">
+          <label className="text-sm font-medium">K/C/O (Known Case Of)</label>
+          <textarea 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            rows={2}
+            placeholder="Enter known medical conditions"
+          />
+        </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 space-y-2">
+          <label className="text-sm font-medium">Additional Points</label>
+          <textarea 
+            className="w-full px-3 py-2 border rounded-lg bg-background"
+            rows={3}
+            placeholder="Enter any additional relevant information"
           />
         </div>
       </div>

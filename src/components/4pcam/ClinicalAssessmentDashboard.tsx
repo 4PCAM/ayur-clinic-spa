@@ -72,22 +72,6 @@ export function ClinicalAssessmentDashboard({ onNavigateToPillar, assessmentProg
           with modern diagnostic approaches for holistic patient evaluation.
         </p>
       </div>
-      {/* Overall Progress */}
-      <div className="max-w-md mx-auto space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Overall Progress</span>
-          <span className="font-semibold text-primary">{Math.round(totalProgress)}%</span>
-        </div>
-        <div className="bg-muted rounded-full h-3 overflow-hidden">
-          <div 
-            className="h-full bg-gradient-primary transition-all duration-700 ease-out"
-            style={{ width: `${totalProgress}%` }}
-          />
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {completedPillars} of 4 pillars completed
-        </p>
-      </div>
 
       {/* Assessment Pillars */}
       <div className="space-y-4">
