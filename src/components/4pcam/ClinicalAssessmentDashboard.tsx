@@ -62,6 +62,13 @@ export function ClinicalAssessmentDashboard({ onNavigateToPillar, assessmentProg
 
   return (
     <div className="space-y-8 animate-fade-in">
+      {/* Description */}
+      <div className="text-center max-w-3xl mx-auto">
+        <p className="text-muted-foreground leading-relaxed">
+          A comprehensive Ayurvedic clinical assessment framework integrating traditional wisdom 
+          with modern diagnostic approaches for holistic patient evaluation.
+        </p>
+      </div>
       {/* Overall Progress */}
       <div className="max-w-md mx-auto space-y-3">
         <div className="flex items-center justify-between text-sm">

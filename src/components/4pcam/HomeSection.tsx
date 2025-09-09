@@ -72,8 +72,8 @@ export function HomeSection({ onNavigateToPillar, assessmentProgress }: HomeSect
             Four Pillar Clinical Assessment Model
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            A comprehensive Ayurvedic clinical assessment framework integrating traditional wisdom 
-            with modern diagnostic approaches for holistic patient evaluation.
+            A unified platform combining ancient Vedic wisdom with modern technology to provide 
+            comprehensive health assessments and personalized wellness insights.
           </p>
         </div>
       </div>
