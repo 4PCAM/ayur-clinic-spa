@@ -68,9 +68,6 @@ export function HomeSection({ onNavigateToPillar, assessmentProgress }: HomeSect
           <h1 className="text-4xl md:text-5xl font-bold text-gradient-primary">
             Vedic Health Scan
           </h1>
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
-            Four Pillar Clinical Assessment Model
-          </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             A unified platform combining ancient Vedic wisdom with modern technology to provide 
             comprehensive health assessments and personalized wellness insights.
