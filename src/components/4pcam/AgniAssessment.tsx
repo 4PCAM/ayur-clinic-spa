@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock, Save } from 'lucide-react';
+import { CheckCircle, Clock, Save, ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AgniData {
@@ -38,6 +38,7 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
   });
 
   const [autoSaveStatus, setAutoSaveStatus] = useState<'saved' | 'saving' | null>(null);
+  const [expandedParameter, setExpandedParameter] = useState<string | null>(null);
 
   // Assessment parameters and their symptoms
   const assessmentMatrix = {
@@ -361,31 +362,57 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
               </thead>
               <tbody>
                 {Object.entries(assessmentMatrix).map(([paramKey, param]) => (
-                  <tr key={paramKey} className="border-b">
-                    <td className="p-3 font-medium">
-                      <div>
-                        <div className="text-sm font-semibold">{param.label}</div>
-                        <div className="text-xs text-muted-foreground">{param.description}</div>
-                      </div>
-                    </td>
-                    {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
-                      <td key={agniType} className="p-2">
-                        <div
-                          onClick={() => handleCellClick(paramKey, agniType)}
-                          className={cn(
-                            "p-3 rounded-lg cursor-pointer transition-all duration-200 text-xs",
-                            "border-2 hover:shadow-md hover:-translate-y-0.5",
-                            agniData.selections[paramKey] === agniType
-                              ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
-                              : "border-muted hover:border-primary/50",
-                            agniConfig.color
-                          )}
+                  <React.Fragment key={paramKey}>
+                    <tr className="border-b">
+                      <td className="p-3 font-medium">
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                          onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
                         >
-                          {param.symptoms[agniType as keyof typeof param.symptoms]}
+                          {expandedParameter === paramKey ? (
+                            <ChevronDown className="w-4 h-4" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
+                          <div>
+                            <div className="text-sm font-semibold">{param.label}</div>
+                            <div className="text-xs text-muted-foreground">{param.description}</div>
+                          </div>
                         </div>
                       </td>
-                    ))}
-                  </tr>
+                      {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
+                        <td key={agniType} className="p-2">
+                          <div
+                            onClick={() => handleCellClick(paramKey, agniType)}
+                            className={cn(
+                              "p-3 rounded-lg cursor-pointer transition-all duration-200 text-xs text-center",
+                              "border-2 hover:shadow-md hover:-translate-y-0.5 min-h-[60px] flex items-center justify-center",
+                              agniData.selections[paramKey] === agniType
+                                ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
+                                : "border-muted hover:border-primary/50",
+                              agniConfig.color
+                            )}
+                          >
+                            {agniData.selections[paramKey] === agniType ? "✓ Selected" : "Click to select"}
+                          </div>
+                        </td>
+                      ))}
+                    </tr>
+                    {expandedParameter === paramKey && (
+                      <tr className="border-b bg-muted/20">
+                        <td className="p-3 text-sm font-medium text-muted-foreground">
+                          Symptoms:
+                        </td>
+                        {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
+                          <td key={agniType} className="p-2">
+                            <div className={cn("p-3 rounded-lg text-xs", agniConfig.color)}>
+                              {param.symptoms[agniType as keyof typeof param.symptoms]}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>
