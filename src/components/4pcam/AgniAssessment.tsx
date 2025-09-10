@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Clock, Save, ChevronDown, ChevronRight } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { CheckCircle, Clock, Save } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AgniData {
@@ -38,91 +40,90 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
   });
 
   const [autoSaveStatus, setAutoSaveStatus] = useState<'saved' | 'saving' | null>(null);
-  const [expandedParameter, setExpandedParameter] = useState<string | null>(null);
 
-  // Assessment parameters and their symptoms
-  const assessmentMatrix = {
-    hunger: {
-      label: 'Hunger Patterns',
-      description: 'Regularity and intensity of appetite',
-      symptoms: {
-        vishama: 'Irregular, unpredictable appetite that varies day to day',
-        tikshna: 'Frequent excessive hunger, burns like fire when hungry',
-        manda: 'Poor, delayed or absent hunger sensation',
-        sama: 'Timely, appropriate hunger at regular intervals'
-      }
+  // Assessment questions and their options
+  const assessmentQuestions = [
+    {
+      key: 'hunger',
+      question: 'How would you best describe your appetite?',
+      options: [
+        { value: 'vishama', text: 'Irregular and unpredictable, varies from day to day' },
+        { value: 'tikshna', text: 'Frequent and excessive; you feel a burning sensation when hungry' },
+        { value: 'manda', text: 'Poor and delayed; you often don\'t feel hungry' },
+        { value: 'sama', text: 'Timely and appropriate; you get hungry at regular intervals' }
+      ]
     },
-    digestion: {
-      label: 'Digestion Timing',
-      description: 'Speed of food processing',
-      symptoms: {
-        vishama: 'Alternating fast and slow digestion, unpredictable',
-        tikshna: 'Very rapid digestion, food processes quickly',
-        manda: 'Very slow, sluggish digestion taking hours',
-        sama: 'Comfortable, timely digestion (3-4 hours)'
-      }
+    {
+      key: 'digestion',
+      question: 'How would you describe your digestion timing?',
+      options: [
+        { value: 'vishama', text: 'Alternates between fast and slow, unpredictable' },
+        { value: 'tikshna', text: 'Very rapid; food processes quickly' },
+        { value: 'manda', text: 'Very slow and sluggish, taking hours' },
+        { value: 'sama', text: 'Comfortable and timely (3-4 hours)' }
+      ]
     },
-    stool: {
-      label: 'Stool Formation',
-      description: 'Bowel movement characteristics',
-      symptoms: {
-        vishama: 'Constipation alternating with loose stools, irregular',
-        tikshna: 'Loose, burning, frequent stools with urgency',
-        manda: 'Constipated, sticky, mucoid, heavy stools',
-        sama: 'Well-formed, regular daily stools without discomfort'
-      }
+    {
+      key: 'stool',
+      question: 'How would you describe your bowel movements?',
+      options: [
+        { value: 'vishama', text: 'Constipation alternating with loose stools, irregular' },
+        { value: 'tikshna', text: 'Loose, burning, frequent with urgency' },
+        { value: 'manda', text: 'Constipated, sticky, heavy stools' },
+        { value: 'sama', text: 'Well-formed, regular daily movements without discomfort' }
+      ]
     },
-    bloating: {
-      label: 'Bloating/Discomfort',
-      description: 'Post-meal digestive symptoms',
-      symptoms: {
-        vishama: 'Gas, bloating, cramping, erratic abdominal symptoms',
-        tikshna: 'Burning sensation, acidity, heat in stomach',
-        manda: 'Heavy, sluggish feeling, fullness for hours',
-        sama: 'No significant discomfort, light feeling after eating'
-      }
+    {
+      key: 'bloating',
+      question: 'How do you feel after eating?',
+      options: [
+        { value: 'vishama', text: 'Gas, bloating, cramping with erratic symptoms' },
+        { value: 'tikshna', text: 'Burning sensation, acidity, heat in stomach' },
+        { value: 'manda', text: 'Heavy, sluggish feeling, fullness for hours' },
+        { value: 'sama', text: 'No significant discomfort, light feeling' }
+      ]
     },
-    appetite: {
-      label: 'Appetite Response',
-      description: 'Changes in hunger patterns',
-      symptoms: {
-        vishama: 'Appetite varies with stress, weather, emotions',
-        tikshna: 'Quick return of hunger after eating, can\'t skip meals',
-        manda: 'Long periods without hunger, eating by routine only',
-        sama: 'Stable appetite, can skip meals without distress'
-      }
+    {
+      key: 'appetite',
+      question: 'How does your appetite respond to different situations?',
+      options: [
+        { value: 'vishama', text: 'Varies with stress, weather, and emotions' },
+        { value: 'tikshna', text: 'Quick return of hunger after eating, can\'t skip meals' },
+        { value: 'manda', text: 'Long periods without hunger, eating by routine only' },
+        { value: 'sama', text: 'Stable appetite, can skip meals without distress' }
+      ]
     },
-    tongue: {
-      label: 'Tongue Coating',
-      description: 'Physical examination findings',
-      symptoms: {
-        vishama: 'Dry, rough, cracked tongue with variable coating',
-        tikshna: 'Red, inflamed tongue with yellow/greenish coating',
-        manda: 'Thick white coating, swollen, pale tongue',
-        sama: 'Pink, clean tongue with minimal clear coating'
-      }
+    {
+      key: 'tongue',
+      question: 'How would you describe your tongue appearance?',
+      options: [
+        { value: 'vishama', text: 'Dry, rough, cracked with variable coating' },
+        { value: 'tikshna', text: 'Red, inflamed with yellow/greenish coating' },
+        { value: 'manda', text: 'Thick white coating, swollen, pale' },
+        { value: 'sama', text: 'Pink, clean with minimal clear coating' }
+      ]
     },
-    afterfood: {
-      label: 'After Food Sensation',
-      description: 'Post-prandial feelings',
-      symptoms: {
-        vishama: 'Sometimes energetic, sometimes tired after eating',
-        tikshna: 'Initially satisfied but quickly becomes hungry again',
-        manda: 'Heavy, lethargic, sleepy for hours after eating',
-        sama: 'Light, content, energetic feeling after meals'
-      }
+    {
+      key: 'afterfood',
+      question: 'How do you typically feel after meals?',
+      options: [
+        { value: 'vishama', text: 'Sometimes energetic, sometimes tired' },
+        { value: 'tikshna', text: 'Initially satisfied but quickly becomes hungry again' },
+        { value: 'manda', text: 'Heavy, lethargic, sleepy for hours' },
+        { value: 'sama', text: 'Light, content, energetic feeling' }
+      ]
     },
-    weight: {
-      label: 'Weight Changes',
-      description: 'Metabolic indicators',
-      symptoms: {
-        vishama: 'Weight fluctuates frequently, difficulty maintaining',
-        tikshna: 'Can lose weight easily, high metabolism',
-        manda: 'Tendency to gain weight, difficult to lose weight',
-        sama: 'Stable weight, easy to maintain ideal weight'
-      }
+    {
+      key: 'weight',
+      question: 'How does your weight typically behave?',
+      options: [
+        { value: 'vishama', text: 'Fluctuates frequently, difficulty maintaining' },
+        { value: 'tikshna', text: 'Can lose weight easily, high metabolism' },
+        { value: 'manda', text: 'Tendency to gain weight, difficult to lose' },
+        { value: 'sama', text: 'Stable weight, easy to maintain ideal weight' }
+      ]
     }
-  };
+  ];
 
   const agniTypes = {
     vishama: { 
@@ -186,12 +187,12 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
     setTimeout(() => setAutoSaveStatus(null), 2000);
   };
 
-  const handleCellClick = (parameter: string, agniType: string) => {
+  const handleQuestionAnswer = (questionKey: string, agniType: string) => {
     const newSelections = { ...agniData.selections };
     const newSymptoms = { ...agniData.selectedSymptoms };
 
     // Remove previous selection for this parameter
-    const previousSelection = newSelections[parameter];
+    const previousSelection = newSelections[questionKey];
     if (previousSelection) {
       setAgniData(prev => ({
         ...prev,
@@ -200,11 +201,14 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
     }
 
     // Add new selection
-    newSelections[parameter] = agniType;
-    newSymptoms[parameter] = {
+    newSelections[questionKey] = agniType;
+    const question = assessmentQuestions.find(q => q.key === questionKey);
+    const selectedOption = question?.options.find(opt => opt.value === agniType);
+    
+    newSymptoms[questionKey] = {
       type: agniType,
-      symptom: assessmentMatrix[parameter as keyof typeof assessmentMatrix].symptoms[agniType as keyof typeof assessmentMatrix.hunger.symptoms],
-      parameter
+      symptom: selectedOption?.text || '',
+      parameter: questionKey
     };
 
     setAgniData(prev => ({
@@ -327,76 +331,42 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
       </div>
 
 
-      {/* Assessment Matrix Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Assessment Matrix</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="text-left p-3 border-b font-semibold">Parameter</th>
-                  {Object.entries(agniTypes).map(([type, config]) => (
-                    <th key={type} className="text-center p-3 border-b font-semibold text-xs">
-                      {config.label}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(assessmentMatrix).map(([paramKey, param]) => (
-                  <tr key={paramKey} className="border-b">
-                    <td className="p-3 font-medium">
-                      <div 
-                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
-                        onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
-                      >
-                        {expandedParameter === paramKey ? (
-                          <ChevronDown className="w-4 h-4" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4" />
-                        )}
-                        <div>
-                          <div className="text-sm font-semibold">{param.label}</div>
-                          <div className="text-xs text-muted-foreground">{param.description}</div>
-                        </div>
-                      </div>
-                    </td>
-                    {expandedParameter === paramKey ? (
-                      Object.entries(agniTypes).map(([agniType, agniConfig]) => (
-                        <td key={agniType} className="p-2">
-                          <div 
-                            onClick={() => handleCellClick(paramKey, agniType)}
-                            className={cn(
-                              "p-3 rounded-lg text-sm cursor-pointer transition-all duration-200",
-                              "border-2 hover:shadow-md hover:-translate-y-0.5",
-                              agniData.selections[paramKey] === agniType
-                                ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
-                                : "border-muted hover:border-primary/50",
-                              agniConfig.color
-                            )}
-                          >
-                            {param.symptoms[agniType as keyof typeof param.symptoms]}
-                            {agniData.selections[paramKey] === agniType && (
-                              <div className="mt-2 text-xs font-bold text-primary">✓ Selected</div>
-                            )}
-                          </div>
-                        </td>
-                      ))
-                    ) : (
-                      <td colSpan={4} className="p-3 text-center text-muted-foreground text-sm">
-                        Click parameter name to expand assessment options
-                      </td>
-                    )}
-                  </tr>
+      {/* Assessment Questions */}
+      <div className="space-y-6">
+        {assessmentQuestions.map((question, index) => (
+          <Card key={question.key}>
+            <CardHeader>
+              <CardTitle className="text-lg">
+                {index + 1}. {question.question}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={agniData.selections[question.key] || ''}
+                onValueChange={(value) => handleQuestionAnswer(question.key, value)}
+                className="space-y-3"
+              >
+                {question.options.map((option) => (
+                  <div key={option.value} className="flex items-start space-x-3">
+                    <RadioGroupItem value={option.value} id={`${question.key}-${option.value}`} className="mt-1" />
+                    <Label 
+                      htmlFor={`${question.key}-${option.value}`}
+                      className="text-sm leading-relaxed cursor-pointer flex-1 hover:text-primary transition-colors"
+                    >
+                      {option.text}
+                    </Label>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+              </RadioGroup>
+              {agniData.selections[question.key] && (
+                <div className="mt-3 text-xs text-primary font-medium">
+                  ✓ Answer selected
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* Results Section */}
       {Object.keys(agniData.selections).length > 0 && (
@@ -409,17 +379,20 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {Object.entries(agniData.selectedSymptoms).map(([param, symptom]) => (
-                <div key={param} className="border-l-4 border-primary pl-3">
-                  <div className="font-semibold text-sm">
-                    {assessmentMatrix[param as keyof typeof assessmentMatrix].label}
+              {Object.entries(agniData.selectedSymptoms).map(([param, symptom]) => {
+                const question = assessmentQuestions.find(q => q.key === param);
+                return (
+                  <div key={param} className="border-l-4 border-primary pl-3">
+                    <div className="font-semibold text-sm">
+                      {question?.question || param}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {agniTypes[symptom.type as keyof typeof agniTypes].label}
+                    </div>
+                    <div className="text-xs mt-1">{symptom.symptom}</div>
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    {agniTypes[symptom.type as keyof typeof agniTypes].label}
-                  </div>
-                  <div className="text-xs mt-1">{symptom.symptom}</div>
-                </div>
-              ))}
+                );
+              })}
         </CardContent>
       </Card>
 
