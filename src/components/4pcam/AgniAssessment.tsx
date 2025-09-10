@@ -326,21 +326,6 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
         )}
       </div>
 
-      {/* Score Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {Object.entries(agniTypes).map(([type, config]) => (
-          <Card key={type} className={cn("text-center", config.color)}>
-            <CardContent className="p-4">
-              <div className="text-2xl font-bold">
-                {agniData[type as keyof AgniData] as number}/8
-              </div>
-              <div className="text-xs font-medium mt-1">
-                {config.label.split(' ')[0]} Agni
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
 
       {/* Assessment Matrix Table */}
       <Card>
@@ -362,56 +347,50 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
               </thead>
               <tbody>
                 {Object.entries(assessmentMatrix).map(([paramKey, param]) => (
-                  <React.Fragment key={paramKey}>
-                    <tr className="border-b">
-                      <td className="p-3 font-medium">
-                        <div 
-                          className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
-                          onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
-                        >
-                          {expandedParameter === paramKey ? (
-                            <ChevronDown className="w-4 h-4" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4" />
-                          )}
-                          <div>
-                            <div className="text-sm font-semibold">{param.label}</div>
-                            <div className="text-xs text-muted-foreground">{param.description}</div>
-                          </div>
+                  <tr key={paramKey} className="border-b">
+                    <td className="p-3 font-medium">
+                      <div 
+                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                        onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
+                      >
+                        {expandedParameter === paramKey ? (
+                          <ChevronDown className="w-4 h-4" />
+                        ) : (
+                          <ChevronRight className="w-4 h-4" />
+                        )}
+                        <div>
+                          <div className="text-sm font-semibold">{param.label}</div>
+                          <div className="text-xs text-muted-foreground">{param.description}</div>
                         </div>
-                      </td>
-                      <td colSpan={4} className="p-3 text-center text-muted-foreground text-sm">
-                        {expandedParameter === paramKey ? "Select a symptom below that best matches the patient" : "Click parameter name to expand assessment options"}
-                      </td>
-                    </tr>
-                     {expandedParameter === paramKey && (
-                      <tr className="border-b bg-muted/20">
-                        <td className="p-3 text-sm font-medium text-muted-foreground">
-                          Symptoms:
+                      </div>
+                    </td>
+                    {expandedParameter === paramKey ? (
+                      Object.entries(agniTypes).map(([agniType, agniConfig]) => (
+                        <td key={agniType} className="p-2">
+                          <div 
+                            onClick={() => handleCellClick(paramKey, agniType)}
+                            className={cn(
+                              "p-3 rounded-lg text-sm cursor-pointer transition-all duration-200",
+                              "border-2 hover:shadow-md hover:-translate-y-0.5",
+                              agniData.selections[paramKey] === agniType
+                                ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
+                                : "border-muted hover:border-primary/50",
+                              agniConfig.color
+                            )}
+                          >
+                            {param.symptoms[agniType as keyof typeof param.symptoms]}
+                            {agniData.selections[paramKey] === agniType && (
+                              <div className="mt-2 text-xs font-bold text-primary">✓ Selected</div>
+                            )}
+                          </div>
                         </td>
-                        {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
-                          <td key={agniType} className="p-2">
-                            <div 
-                              onClick={() => handleCellClick(paramKey, agniType)}
-                              className={cn(
-                                "p-3 rounded-lg text-sm cursor-pointer transition-all duration-200",
-                                "border-2 hover:shadow-md hover:-translate-y-0.5",
-                                agniData.selections[paramKey] === agniType
-                                  ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
-                                  : "border-muted hover:border-primary/50",
-                                agniConfig.color
-                              )}
-                            >
-                              {param.symptoms[agniType as keyof typeof param.symptoms]}
-                              {agniData.selections[paramKey] === agniType && (
-                                <div className="mt-2 text-xs font-bold text-primary">✓ Selected</div>
-                              )}
-                            </div>
-                          </td>
-                        ))}
-                      </tr>
+                      ))
+                    ) : (
+                      <td colSpan={4} className="p-3 text-center text-muted-foreground text-sm">
+                        Click parameter name to expand assessment options
+                      </td>
                     )}
-                  </React.Fragment>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -441,8 +420,24 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
                   <div className="text-xs mt-1">{symptom.symptom}</div>
                 </div>
               ))}
+        </CardContent>
+      </Card>
+
+      {/* Score Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {Object.entries(agniTypes).map(([type, config]) => (
+          <Card key={type} className={cn("text-center", config.color)}>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold">
+                {agniData[type as keyof AgniData] as number}/8
+              </div>
+              <div className="text-xs font-medium mt-1">
+                {config.label.split(' ')[0]} Agni
+              </div>
             </CardContent>
           </Card>
+        ))}
+      </div>
 
           {/* Clinical Results */}
           <Card>
