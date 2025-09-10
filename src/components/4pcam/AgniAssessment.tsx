@@ -380,23 +380,29 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
                           </div>
                         </div>
                       </td>
-                      {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
-                        <td key={agniType} className="p-2">
-                          <div
-                            onClick={() => handleCellClick(paramKey, agniType)}
-                            className={cn(
-                              "p-3 rounded-lg cursor-pointer transition-all duration-200 text-xs text-center",
-                              "border-2 hover:shadow-md hover:-translate-y-0.5 min-h-[60px] flex items-center justify-center",
-                              agniData.selections[paramKey] === agniType
-                                ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
-                                : "border-muted hover:border-primary/50",
-                              agniConfig.color
-                            )}
-                          >
-                            {agniData.selections[paramKey] === agniType ? "✓ Selected" : "Click to select"}
-                          </div>
+                      {expandedParameter === paramKey ? (
+                        Object.entries(agniTypes).map(([agniType, agniConfig]) => (
+                          <td key={agniType} className="p-2">
+                            <div
+                              onClick={() => handleCellClick(paramKey, agniType)}
+                              className={cn(
+                                "p-3 rounded-lg cursor-pointer transition-all duration-200 text-xs text-center",
+                                "border-2 hover:shadow-md hover:-translate-y-0.5 min-h-[60px] flex items-center justify-center",
+                                agniData.selections[paramKey] === agniType
+                                  ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
+                                  : "border-muted hover:border-primary/50",
+                                agniConfig.color
+                              )}
+                            >
+                              {agniData.selections[paramKey] === agniType ? "✓ Selected" : "Click to select"}
+                            </div>
+                          </td>
+                        ))
+                      ) : (
+                        <td colSpan={4} className="p-3 text-center text-muted-foreground text-sm">
+                          Click parameter name to expand assessment options
                         </td>
-                      ))}
+                      )}
                     </tr>
                     {expandedParameter === paramKey && (
                       <tr className="border-b bg-muted/20">
