@@ -327,72 +327,61 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
       </div>
 
 
-      {/* Assessment Matrix Table */}
+      {/* Assessment Matrix */}
       <Card>
         <CardHeader>
           <CardTitle>Assessment Matrix</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="text-left p-3 border-b font-semibold">Parameter</th>
-                  <th className="text-center p-3 border-b font-semibold text-xs">Option 1</th>
-                  <th className="text-center p-3 border-b font-semibold text-xs">Option 2</th>
-                  <th className="text-center p-3 border-b font-semibold text-xs">Option 3</th>
-                  <th className="text-center p-3 border-b font-semibold text-xs">Option 4</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(assessmentMatrix).map(([paramKey, param]) => (
-                  <tr key={paramKey} className="border-b">
-                    <td className="p-3 font-medium">
-                      <div 
-                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
-                        onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
-                      >
-                        {expandedParameter === paramKey ? (
-                          <ChevronDown className="w-4 h-4" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4" />
-                        )}
-                        <div>
-                          <div className="text-sm font-semibold">{param.label}</div>
-                          <div className="text-xs text-muted-foreground">{param.description}</div>
-                        </div>
-                      </div>
-                    </td>
+          <div className="space-y-4">
+            {Object.entries(assessmentMatrix).map(([paramKey, param]) => (
+              <Card key={paramKey} className="border">
+                <CardContent className="p-4">
+                  <div 
+                    className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                    onClick={() => setExpandedParameter(expandedParameter === paramKey ? null : paramKey)}
+                  >
                     {expandedParameter === paramKey ? (
-                      Object.entries(agniTypes).map(([agniType, agniConfig]) => (
-                        <td key={agniType} className="p-2">
-                          <div 
-                            onClick={() => handleCellClick(paramKey, agniType)}
-                            className={cn(
-                              "p-3 rounded-lg text-sm cursor-pointer transition-all duration-200",
-                              "border-2 hover:shadow-md hover:-translate-y-0.5",
-                              agniData.selections[paramKey] === agniType
-                                ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
-                                : "border-muted hover:border-primary/50",
-                              agniConfig.color
-                            )}
-                          >
-                            {param.symptoms[agniType as keyof typeof param.symptoms]}
-                            {agniData.selections[paramKey] === agniType && (
-                              <div className="mt-2 text-xs font-bold text-primary">✓ Selected</div>
-                            )}
-                          </div>
-                        </td>
-                      ))
+                      <ChevronDown className="w-4 h-4" />
                     ) : (
-                      <td colSpan={4} className="p-3 text-center text-muted-foreground text-sm">
-                        Click parameter name to expand assessment options
-                      </td>
+                      <ChevronRight className="w-4 h-4" />
                     )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    <div>
+                      <div className="text-sm font-semibold">{param.label}</div>
+                      <div className="text-xs text-muted-foreground">{param.description}</div>
+                    </div>
+                  </div>
+                  
+                  {expandedParameter === paramKey ? (
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {Object.entries(agniTypes).map(([agniType, agniConfig]) => (
+                        <div 
+                          key={agniType}
+                          onClick={() => handleCellClick(paramKey, agniType)}
+                          className={cn(
+                            "p-3 rounded-lg text-sm cursor-pointer transition-all duration-200",
+                            "border-2 hover:shadow-md hover:-translate-y-0.5",
+                            agniData.selections[paramKey] === agniType
+                              ? "border-primary bg-primary/10 font-semibold shadow-lg scale-105"
+                              : "border-muted hover:border-primary/50",
+                            agniConfig.color
+                          )}
+                        >
+                          {param.symptoms[agniType as keyof typeof param.symptoms]}
+                          {agniData.selections[paramKey] === agniType && (
+                            <div className="mt-2 text-xs font-bold text-primary">✓ Selected</div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="mt-2 text-center text-muted-foreground text-sm">
+                      Click to expand assessment options
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </CardContent>
       </Card>
