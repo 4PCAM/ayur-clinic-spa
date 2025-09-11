@@ -73,23 +73,23 @@ export function ClinicalAssessmentDashboard({ onNavigateToPillar, assessmentProg
         </p>
       </div>
 
-      {/* Assessment Pillars */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-center mb-6">Assessment Pillars</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {pillars.map((pillar) => (
-            <PillarCard
-              key={pillar.id}
-              title={pillar.title}
-              description={pillar.description}
-              icon={pillar.icon}
-              pillarType={pillar.pillarType}
-              progress={pillar.progress}
-              isCompleted={pillar.progress === 100}
-              onClick={() => onNavigateToPillar?.(pillar.id)}
-              className="animate-fade-in"
-            />
-          ))}
+      {/* Overview Progress */}
+      <div className="max-w-2xl mx-auto text-center space-y-4">
+        <div className="bg-card p-6 rounded-xl border shadow-ayur-soft">
+          <h3 className="text-lg font-semibold mb-3">Assessment Progress</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {pillars.map((pillar) => (
+              <div key={pillar.id} className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <pillar.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-sm font-medium">{pillar.progress}%</div>
+                <div className="text-xs text-muted-foreground">
+                  {pillar.title.split(' - ')[1]}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

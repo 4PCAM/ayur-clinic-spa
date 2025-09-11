@@ -267,10 +267,12 @@ const Index = () => {
       icon: <Stethoscope className="w-5 h-5" />,
       children: (
         <div className="space-y-4">
-          <ClinicalAssessmentDashboard 
-            onNavigateToPillar={handleNavigateToPillar}
-            assessmentProgress={assessmentProgress}
-          />
+          <div className="text-center space-y-3 mb-6">
+            <ClinicalAssessmentDashboard 
+              onNavigateToPillar={handleNavigateToPillar}
+              assessmentProgress={assessmentProgress}
+            />
+          </div>
           <AccordionSPA 
             items={clinicalAssessmentItems}
             defaultOpen="patient-info"
