@@ -447,35 +447,27 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2 text-sm">
-                <div>Total Dusti Score: {agniData.vishama + agniData.tikshna + agniData.manda}/8</div>
-                <div>Sama Agni Score: {agniData.sama}/8</div>
-                <div>Parameters Assessed: {Object.keys(agniData.selections).length}/8</div>
-                <div>Completion: {Math.round((Object.keys(agniData.selections).length / 8) * 100)}%</div>
-              </div>
-              
               {isCompleted && (
-                <div className="space-y-3 pt-3 border-t">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold">Assessment:</span>
-                    <Badge className={cn("text-white", severity.color)}>
-                      {severity.level}
-                    </Badge>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {severity.description}
-                  </div>
-                  
-                  {dominantPattern && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-semibold">
-                        Dominant Pattern: {dominantPattern.label} (Score: {dominantPattern.score}/8)
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Clinical Significance: {dominantPattern.risk}
-                      </div>
+                <div className="space-y-3">
+                  <div className="text-sm font-semibold">Assessment Results:</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Viṣama Agni (Vata Duṣṭi)</span>
+                      <span className="text-sm font-medium">Score: {agniData.vishama}/8</span>
                     </div>
-                  )}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Tīkṣṇa Agni (Pitta Duṣṭi)</span>
+                      <span className="text-sm font-medium">Score: {agniData.tikshna}/8</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Manda Agni (Kapha Duṣṭi)</span>
+                      <span className="text-sm font-medium">Score: {agniData.manda}/8</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Sama Agni (Balanced)</span>
+                      <span className="text-sm font-medium">Score: {agniData.sama}/8</span>
+                    </div>
+                  </div>
                 </div>
               )}
             </CardContent>
