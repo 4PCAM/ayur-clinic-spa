@@ -338,11 +338,10 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
               <thead>
                 <tr>
                   <th className="text-left p-3 border-b font-semibold">Parameter</th>
-                  {Object.entries(agniTypes).map(([type, config]) => (
-                    <th key={type} className="text-center p-3 border-b font-semibold text-xs">
-                      {config.label}
-                    </th>
-                  ))}
+                  <th className="text-center p-3 border-b font-semibold text-xs">Option 1</th>
+                  <th className="text-center p-3 border-b font-semibold text-xs">Option 2</th>
+                  <th className="text-center p-3 border-b font-semibold text-xs">Option 3</th>
+                  <th className="text-center p-3 border-b font-semibold text-xs">Option 4</th>
                 </tr>
               </thead>
               <tbody>
