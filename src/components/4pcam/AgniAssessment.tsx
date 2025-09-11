@@ -449,7 +449,14 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
             <CardContent className="space-y-4">
               {isCompleted && (
                 <div className="space-y-3">
-                  <div className="text-sm font-semibold">Assessment Results:</div>
+                  {dominantPattern && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold">Type of Agni Duṣṭi:</span>
+                      <Badge className={cn("text-white", agniTypes[dominantPattern.type as keyof typeof agniTypes].color.includes('orange') ? 'bg-orange-500' : agniTypes[dominantPattern.type as keyof typeof agniTypes].color.includes('red') ? 'bg-red-500' : agniTypes[dominantPattern.type as keyof typeof agniTypes].color.includes('green') ? 'bg-green-500' : 'bg-blue-500')}>
+                        {dominantPattern.label}
+                      </Badge>
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm">Viṣama Agni (Vata Duṣṭi)</span>
