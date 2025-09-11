@@ -457,24 +457,6 @@ export function AgniAssessment({ onComplete, onProgressUpdate }: AgniAssessmentP
                       </Badge>
                     </div>
                   )}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Viṣama Agni (Vata Duṣṭi)</span>
-                      <span className="text-sm font-medium">Score: {agniData.vishama}/8</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Tīkṣṇa Agni (Pitta Duṣṭi)</span>
-                      <span className="text-sm font-medium">Score: {agniData.tikshna}/8</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Manda Agni (Kapha Duṣṭi)</span>
-                      <span className="text-sm font-medium">Score: {agniData.manda}/8</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Sama Agni (Balanced)</span>
-                      <span className="text-sm font-medium">Score: {agniData.sama}/8</span>
-                    </div>
-                  </div>
                 </div>
               )}
             </CardContent>
